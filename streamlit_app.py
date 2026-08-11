@@ -4,15 +4,8 @@ from pathlib import Path
 st.set_page_config(page_title="Navas de Tolosa Arcade", page_icon="⚔️", layout="wide")
 st.markdown("""
 <style>
-html, body, [data-testid='stAppViewContainer'] {
-    background:#0d0b09;
-    margin:0;
-    overflow:hidden;
-}
-.block-container {
-    padding:0 !important;
-    max-width:100% !important;
-}
+html, body, [data-testid='stAppViewContainer'] { background:#0d0b09; margin:0; overflow:hidden; }
+.block-container { padding:0 !important; max-width:100% !important; }
 header, footer { display:none !important; }
 iframe { border:0 !important; display:block; margin:0 auto; }
 </style>
@@ -22,70 +15,85 @@ html = Path("game/index.html").read_text(encoding="utf-8")
 
 responsive_ui = r"""
 <style>
-html,body{width:100%;height:100%;margin:0!important;overflow:hidden!important;background:#0b0907!important;}
-#w{width:100%!important;height:100vh!important;max-width:none!important;padding:0!important;position:relative!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important;}
-#box{width:min(100vw,860px)!important;height:auto!important;aspect-ratio:15/11!important;margin:0 auto!important;border:0!important;box-shadow:none!important;position:relative!important;}
-canvas{width:100%!important;height:100%!important;object-fit:contain!important;}
-#hud{position:absolute!important;z-index:30!important;top:8px!important;left:50%!important;transform:translateX(-50%)!important;width:min(96vw,820px)!important;padding:5px 7px!important;border:1px solid rgba(222,181,95,.65)!important;border-radius:12px!important;background:rgba(24,18,13,.78)!important;backdrop-filter:blur(6px)!important;box-shadow:0 4px 16px rgba(0,0,0,.35)!important;font-size:11px!important;gap:4px!important;}
-#hud .b{border:0!important;border-radius:8px!important;background:rgba(76,57,37,.72)!important;padding:4px 6px!important;}
-#mob{position:absolute!important;z-index:35!important;left:0!important;bottom:10px!important;width:100%!important;padding:0 12px!important;margin:0!important;display:flex!important;align-items:flex-end!important;justify-content:space-between!important;pointer-events:none!important;}
-#pad,#fire{pointer-events:auto!important;}
-#pad{display:grid!important;grid-template-columns:76px 76px 76px!important;grid-template-rows:62px 62px!important;gap:6px!important;filter:drop-shadow(0 5px 8px rgba(0,0,0,.45));}
-.ctrl{min-width:76px!important;min-height:62px!important;font-size:31px!important;border:2px solid rgba(231,189,99,.9)!important;border-radius:16px!important;background:rgba(31,25,20,.86)!important;box-shadow:0 4px 0 rgba(0,0,0,.55)!important;}
-#fire{width:150px!important;height:126px!important;border-radius:28px!important;font-size:19px!important;border:3px solid #d8a540!important;background:linear-gradient(180deg,rgba(154,55,42,.94),rgba(91,27,21,.96))!important;box-shadow:0 6px 0 rgba(0,0,0,.55),0 0 20px rgba(216,165,64,.15)!important;}
-#hint{display:none!important;}#start{border-radius:0!important;}.card{border-radius:18px!important;max-width:min(88vw,560px)!important;}
-@media(max-width:650px){#box{width:100vw!important;aspect-ratio:15/11!important;}#hud{top:4px!important;width:98vw!important;font-size:9.5px!important;padding:4px!important;}#mob{bottom:7px!important;padding:0 8px!important;}#pad{grid-template-columns:70px 70px 70px!important;grid-template-rows:58px 58px!important;gap:5px!important;}.ctrl{min-width:70px!important;min-height:58px!important;font-size:29px!important;}#fire{width:132px!important;height:116px!important;font-size:17px!important;}}
-@media(max-width:390px){#pad{grid-template-columns:64px 64px 64px!important;grid-template-rows:54px 54px!important;}.ctrl{min-width:64px!important;min-height:54px!important;}#fire{width:118px!important;height:108px!important;}}
+html,body{width:100%;height:100%;margin:0!important;overflow:hidden!important;background:#0b0907!important}
+#w{width:100%!important;height:100vh!important;max-width:none!important;padding:0!important;position:relative!important;overflow:hidden!important;display:flex!important;align-items:center!important;justify-content:center!important}
+#box{width:min(100vw,860px)!important;height:auto!important;aspect-ratio:15/11!important;margin:0 auto!important;border:0!important;box-shadow:none!important;position:relative!important}
+canvas{width:100%!important;height:100%!important;object-fit:contain!important}
+#hud{position:absolute!important;z-index:30!important;top:6px!important;left:50%!important;transform:translateX(-50%)!important;width:min(97vw,830px)!important;padding:5px!important;border:1px solid rgba(222,181,95,.65)!important;border-radius:12px!important;background:rgba(24,18,13,.80)!important;backdrop-filter:blur(6px)!important;font-size:10px!important;gap:3px!important}
+#hud .b{border:0!important;border-radius:7px!important;background:rgba(76,57,37,.74)!important;padding:4px 5px!important}
+#mob{position:absolute!important;z-index:35!important;left:0!important;bottom:8px!important;width:100%!important;padding:0 10px!important;margin:0!important;display:flex!important;align-items:flex-end!important;justify-content:space-between!important;pointer-events:none!important}
+#pad,#fire{pointer-events:auto!important}
+#pad{display:grid!important;grid-template-columns:72px 72px 72px!important;grid-template-rows:59px 59px!important;gap:5px!important;filter:drop-shadow(0 5px 8px rgba(0,0,0,.45))}
+.ctrl{min-width:72px!important;min-height:59px!important;font-size:30px!important;border:2px solid rgba(231,189,99,.9)!important;border-radius:15px!important;background:rgba(31,25,20,.88)!important;box-shadow:0 4px 0 rgba(0,0,0,.55)!important}
+#fire{width:142px!important;height:120px!important;border-radius:26px!important;font-size:18px!important;border:3px solid #d8a540!important;background:linear-gradient(180deg,rgba(154,55,42,.96),rgba(91,27,21,.97))!important;box-shadow:0 6px 0 rgba(0,0,0,.55)!important}
+#hint{display:none!important}
+.storyOverlay{position:absolute;inset:0;z-index:90;background:linear-gradient(rgba(9,7,5,.95),rgba(25,17,10,.96));display:flex;align-items:center;justify-content:center;padding:14px;color:#f8e7b6;text-align:center}
+.storyCard{width:min(92%,650px);max-height:94%;overflow:auto;background:rgba(39,27,18,.97);border:2px solid #c59a43;border-radius:18px;padding:18px;box-shadow:0 14px 40px #000}
+.storyCard h1,.storyCard h2{color:#f1c24d;margin:5px 0 10px}.storyCard p{line-height:1.4;margin:8px 0}.storyCard button{margin-top:12px;padding:11px 18px;border:2px solid #d8a540;border-radius:11px;background:#7d2b22;color:#fff0c2;font:900 16px monospace}
+#bossPortrait{width:min(62vw,260px);height:auto;image-rendering:pixelated;border:2px solid #76552e;border-radius:12px;background:#140d08;margin:7px auto;display:block}
+@media(max-width:650px){#box{width:100vw!important;aspect-ratio:15/11!important}#hud{top:3px!important;width:99vw!important;font-size:9px!important;padding:3px!important}#mob{bottom:5px!important;padding:0 7px!important}#pad{grid-template-columns:68px 68px 68px!important;grid-template-rows:56px 56px!important;gap:4px!important}.ctrl{min-width:68px!important;min-height:56px!important;font-size:29px!important}#fire{width:130px!important;height:112px!important;font-size:17px!important}.storyCard{padding:14px;font-size:12px}.storyCard h1{font-size:23px}.storyCard h2{font-size:19px}}
 </style>
 """
 
-gameplay_patch = r"""
+game_patch = r"""
 <script>
 (() => {
-  let longanizaUnlocked=false,ristras=0,longPick=null,tutorialPaused=false,chargeStart=0,charging=false,thrownRistras=[];
-  const tileIn=(cells,entity)=>!!entity&&!!cells&&cells.some(c=>c.x===entity.x&&c.y===entity.y);
-  const oldHud=hud,oldLevel=level,oldTouch=touch,oldUpdate=update,oldDrawWorld=drawWorld,oldBlast=blast,baseFire=fire,baseDamageCells=damageCells;
+  let paused=false, longUnlocked=false, ristras=0, longPick=null, charging=false, chargeStart=0, thrown=[], shown=new Set();
+  const tileIn=(cells,e)=>!!e&&!!cells&&cells.some(c=>c.x===e.x&&c.y===e.y);
+  const baseLevel=level, baseUpdate=update, baseDrawWorld=drawWorld, baseTouch=touch, baseFire=fire, baseDamage=damageCells, baseBlast=blast, baseHud=hud;
 
-  const hudNode=document.getElementById('hud'),ammoBadge=document.createElement('span');
-  ammoBadge.className='b';ammoBadge.id='ristras';hudNode.insertBefore(ammoBadge,document.getElementById('sc'));
-  function updateRistraHud(){ammoBadge.textContent=longanizaUnlocked?`🌭 ${ristras}`:'🌭 —';ammoBadge.title='Ristras de Longaniza de Fuentes';}
-  hud=function(){oldHud();updateRistraHud();};
+  const HIST=[
+    {year:'1086',place:'Sagrajas / az-Zallaqa',boss:'MEHMET',lines:['Alfonso VI había extendido su poder sobre Toledo y presionaba a las taifas peninsulares.','Varios gobernantes andalusíes pidieron ayuda al emir almorávide Yusuf ibn Tashfin, llegado desde el norte de África.','Los ejércitos se encontraron cerca de Badajoz en 1086.','La batalla terminó con una dura derrota de las fuerzas cristianas y frenó temporalmente la expansión castellano-leonesa.','Nuestra campaña convierte aquel choque histórico en la primera prueba de esta crónica fantástica.']},
+    {year:'1108',place:'Uclés',boss:'AMIR',lines:['En 1108, las fuerzas almorávides avanzaron sobre Uclés, una posición estratégica de la frontera castellana.','El ejército cristiano acudió para responder a la ofensiva.','En la batalla murió Sancho Alfónsez, único hijo varón de Alfonso VI.','La derrota tuvo consecuencias políticas profundas para la sucesión del reino.','En esta fase, la noche y el candil recuerdan la incertidumbre de una frontera siempre amenazada.']},
+    {year:'1195',place:'Alarcos',boss:'MOHAMED',lines:['Alfonso VIII de Castilla se enfrentó en 1195 al ejército almohade dirigido por Yaqub al-Mansur.','El choque tuvo lugar cerca de Alarcos, junto al Guadiana.','La caballería castellana atacó con fuerza, pero el ejército almohade resistió y contraatacó.','La derrota cristiana alteró durante años el equilibrio militar de la Meseta Sur.','Aquella herida sería uno de los antecedentes directos de la gran campaña de 1212.']},
+    {year:'1212',place:'Las Navas de Tolosa',boss:'HASSAN',lines:['En 1212 una coalición encabezada por Alfonso VIII de Castilla, Pedro II de Aragón y Sancho VII de Navarra marchó hacia el sur.','Frente a ellos estaba el gran ejército almohade del califa Muhammad al-Nasir.','Tras atravesar Sierra Morena, ambos bandos chocaron en Las Navas de Tolosa.','La victoria de la coalición cristiana debilitó decisivamente el poder almohade en la península.','Es el corazón histórico de nuestra aventura y el duelo que da nombre al juego.']},
+    {year:'1340',place:'Río Salado',boss:'AHMED',lines:['En 1340, una nueva gran ofensiva norteafricana llegó a la península bajo los benimerines, aliados con Granada.','Alfonso XI de Castilla y Afonso IV de Portugal reunieron fuerzas para detenerla.','Los ejércitos se enfrentaron cerca del río Salado, junto al Estrecho.','La victoria cristiana limitó las grandes intervenciones militares norteafricanas en la península durante las décadas siguientes.','Aquí termina nuestro viaje legendario a través de más de dos siglos de combates fronterizos.']}
+  ];
 
-  const tutorial=document.createElement('div');tutorial.id='longTutorial';tutorial.style.cssText='display:none;position:absolute;inset:0;z-index:80;background:rgba(8,6,4,.92);align-items:center;justify-content:center;padding:18px;text-align:center;';
-  tutorial.innerHTML=`<div style="max-width:560px;background:#25170e;border:3px solid #d8a540;border-radius:18px;padding:22px;box-shadow:0 10px 35px #000;color:#fff0c2"><div style="font-size:44px">🌭</div><h2 style="color:#ffd95c;margin:4px 0 10px">¡LONGANIZA DE FUENTES!</h2><p><b>ARMA ARROJADIZA DESBLOQUEADA</b></p><p>Mantén pulsado <b>PEPINAZO durante 1 segundo</b> y suelta.</p><p>La ristra vuela hasta <b>4 casillas</b> en la dirección del rey y explota con alcance de <b>2 casillas a cada lado</b>.</p><p>Cada enemigo eliminado después de conseguirla añade <b>+1 ristra</b>. La munición se conserva entre fases.</p><p>Empiezas con <b>2 ristras</b>.</p><button id="longOk" style="margin-top:8px;padding:12px 22px;font:900 18px monospace;border:2px solid #d8a540;border-radius:12px;background:#7d2b22;color:#fff0c2">¡ENTENDIDO!</button></div>`;
-  document.getElementById('box').appendChild(tutorial);document.getElementById('longOk').onclick=()=>{tutorialPaused=false;tutorial.style.display='none';};
-  function unlockLonganiza(){if(longanizaUnlocked)return;longanizaUnlocked=true;ristras+=2;tutorialPaused=true;tutorial.style.display='flex';updateRistraHud();}
-  function chooseLongPick(){if(longanizaUnlocked){longPick=null;return;}const candidates=[];for(let y=1;y<R-1;y++)for(let x=1;x<C-1;x++)if(g[y][x]===2&&!picks.some(pk=>pk.x===x&&pk.y===y))candidates.push({x,y});if(candidates.length){const q=candidates[Math.floor(Math.random()*candidates.length)];longPick={x:q.x,y:q.y,hidden:true,taken:false,t:0};}}
-  level=function(){oldLevel();chooseLongPick();updateRistraHud();};
-  function awardKill(n=1){if(!longanizaUnlocked||n<=0)return;ristras+=n;updateRistraHud();}
+  const hudNode=document.getElementById('hud'), ammo=document.createElement('span'); ammo.className='b'; ammo.id='ristras'; hudNode.insertBefore(ammo,document.getElementById('sc'));
+  function hudExtra(){ammo.textContent=longUnlocked?`🌭 ${ristras}`:'🌭 —';}
+  hud=function(){baseHud();hudExtra();};
 
-  damageCells=function(cells,allowBreak=true){const before=enemies.filter(e=>e.alive).length+(elite&&elite.alive?1:0)+sappers.filter(s=>s.alive).length;baseDamageCells(cells,allowBreak);const after=enemies.filter(e=>e.alive).length+(elite&&elite.alive?1:0)+sappers.filter(s=>s.alive).length;awardKill(before-after);if(longPick&&longPick.hidden)for(const c of cells)if(c.x===longPick.x&&c.y===longPick.y&&g[c.y][c.x]===0){longPick.hidden=false;say('¡ALGO HUELE A FUENTES!','#ffd95c',700);break;}};
-  touch=function(){if(longPick&&!longPick.hidden&&!longPick.taken&&p.x===longPick.x&&p.y===longPick.y){longPick.taken=true;unlockLonganiza();}oldTouch();};
+  function portrait(canvas,idx){const c=canvas.getContext('2d'),W=canvas.width,H=canvas.height,cols=['#68422f','#6c2f37','#4d6330','#7a4b26','#3c536d'];c.clearRect(0,0,W,H);c.fillStyle='#130c08';c.fillRect(0,0,W,H);c.fillStyle=cols[idx];c.fillRect(55,68,130,82);c.fillStyle='#c99569';c.beginPath();c.arc(120,70,50,0,7);c.fill();c.fillStyle='#eee0b9';c.fillRect(63,34,114,25);c.fillRect(78,21,84,19);c.fillStyle='#20130e';c.fillRect(82,66,18,10);c.fillRect(140,66,18,10);c.fillRect(96,102,48,9);c.fillStyle='#fff1cf';c.fillRect(101,102,12,5);c.fillRect(127,102,12,5);c.fillStyle='#3b2418';c.fillRect(88,118,64,25);c.fillStyle='#d0a53b';c.fillRect(48,147,144,9);c.fillStyle='#f1c24d';c.font='bold 17px monospace';c.textAlign='center';c.fillText(HIST[idx].boss,120,173);}
 
-  function dirVec(){const d=p.dir||p.lastDir||'down';if(d==='left')return[-1,0];if(d==='right')return[1,0];if(d==='up')return[0,-1];return[0,1];}
-  function throwLonganiza(){if(!longanizaUnlocked||ristras<=0||tutorialPaused||over||trans)return false;ristras--;updateRistraHud();const[dx,dy]=dirVec();let tx=p.x,ty=p.y;for(let i=0;i<4;i++){const nx=tx+dx,ny=ty+dy;if(nx<=0||ny<=0||nx>=C-1||ny>=R-1||g[ny][nx]===1||g[ny][nx]===3)break;tx=nx;ty=ny;}const now=performance.now();thrownRistras.push({sx:p.x,sy:p.y,x:tx,y:ty,px:p.px,py:p.py,start:now,land:now+420,boomUntil:0,cells:null});say('¡LONGANIZA VOLADORA!','#ffcf61',420);return true;}
-  function explodeLonganiza(r,now){r.cells=traceBlast({x:r.x,y:r.y,range:2});r.boomUntil=now+520;damageCells(r.cells,true);}
-  function beginCharge(){if(tutorialPaused||over||trans||charging)return;charging=true;chargeStart=performance.now();document.getElementById('fire').textContent=longanizaUnlocked&&ristras>0?'🌭 CARGANDO…':'💥 PEPINAZO';}
-  function releaseCharge(){if(!charging)return;const held=performance.now()-chargeStart;charging=false;document.getElementById('fire').innerHTML='💥<br>PEPINAZO';if(held>=950&&longanizaUnlocked&&ristras>0)throwLonganiza();else baseFire();}
-  fire=beginCharge;window.addEventListener('keyup',e=>{if(e.key===' ')releaseCharge();});
-  const fireBtn=document.getElementById('fire');fireBtn.onclick=null;fireBtn.addEventListener('pointerdown',e=>{e.preventDefault();beginCharge();});fireBtn.addEventListener('pointerup',e=>{e.preventDefault();releaseCharge();});fireBtn.addEventListener('pointercancel',()=>releaseCharge());fireBtn.addEventListener('pointerleave',()=>{if(charging)releaseCharge();});
+  function overlay(html,buttonText,onClose,idx=null){paused=true;const o=document.createElement('div');o.className='storyOverlay';o.innerHTML=`<div class="storyCard">${html}<button id="storyGo">${buttonText}</button></div>`;document.getElementById('box').appendChild(o);if(idx!==null){const pc=o.querySelector('#bossPortrait');if(pc)portrait(pc,idx);}o.querySelector('#storyGo').onclick=()=>{o.remove();paused=false;last=performance.now();onClose&&onClose();};}
 
-  function lingeringFire(now){const active=bombs.filter(b=>b.ex&&now<b.until);for(const b of active){const cells=b.sacredCells?b.cells.concat(b.sacredCells):b.cells;let kills=0;for(const e of enemies)if(e.alive&&tileIn(cells,e)){e.alive=false;score+=200;kills++;}if(elite&&elite.alive&&tileIn(cells,elite)){elite.alive=false;score+=500;kills++;say('¡ÉLITE ABRASADO!','#75e3ff',520);}for(const s of sappers)if(s.alive&&tileIn(cells,s)){s.alive=false;score+=120;leaveBlood(s.x,s.y);kills++;}if(p&&tileIn(cells,p))hurt();if(boss.alive&&duel&&!b._bossHazardHit&&tileIn(cells,boss)){b._bossHazardHit=true;boss.hp--;score+=350;if(boss.hp<=0){boss.alive=false;score+=1000;say('¡'+BOSSES[L-1].name+' REVENTADO!','#ff8c42',700);setTimeout(win,720);}else say(`¡PEPINAZO! ${boss.hp} ♥`,'#ff8c42',580);}awardKill(kills);}if(active.length){hud();checkDuel();}}
-  blast=function(b){const initialCells=traceBlast(b);const bossHitInitially=boss&&boss.alive&&duel&&tileIn(initialCells,boss);oldBlast(b);b._bossHazardHit=bossHitInitially;};
+  function battleIntro(idx){const h=HIST[idx],paras=h.lines.map(x=>`<p>${x}</p>`).join('');overlay(`<div style="font-size:12px;color:#bda36d">AÑO ${h.year}</div><h2>${h.place}</h2>${paras}<canvas id="bossPortrait" width="240" height="180"></canvas><h2 style="color:#ff9b55">TE ESPERA ${h.boss}</h2><p><b>El malo malísimo ya se ríe. Haz que deje de hacerlo.</b></p>`,'¡A LA BATALLA!',null,idx);}
 
-  update=function(dt,now){if(tutorialPaused)return;oldUpdate(dt,now);lingeringFire(now);for(const r of thrownRistras){if(!r.cells){const t=Math.min(1,(now-r.start)/(r.land-r.start));r.px=tcx(r.sx)+(tcx(r.x)-tcx(r.sx))*t;r.py=tcy(r.sy)+(tcy(r.y)-tcy(r.sy))*t-Math.sin(Math.PI*t)*TH*.7;if(t>=1)explodeLonganiza(r,now);}}thrownRistras=thrownRistras.filter(r=>!r.cells||now<r.boomUntil);if(longPick&&!longPick.hidden&&!longPick.taken)longPick.t+=dt*.004;};
+  function chooseLong(){if(longUnlocked){longPick=null;return;}const a=[];for(let y=1;y<R-1;y++)for(let x=1;x<C-1;x++)if(g[y][x]===2&&!picks.some(pk=>pk.x===x&&pk.y===y))a.push({x,y});if(a.length)longPick={...a[Math.floor(Math.random()*a.length)],hidden:true,taken:false,t:0};}
+  level=function(){baseLevel();chooseLong();hudExtra();if(!shown.has(L)){shown.add(L);battleIntro(L-1);}};
 
-  function drawLonganiza(cx,cy,scale=1,angle=0){ctx.save();ctx.translate(cx,cy);ctx.rotate(angle);ctx.fillStyle='#6b331d';ctx.fillRect(-30*scale,-8*scale,60*scale,16*scale);ctx.fillStyle='#c96635';for(let i=-2;i<=2;i++){ctx.beginPath();ctx.ellipse(i*13*scale,0,10*scale,7*scale,0,0,7);ctx.fill();}ctx.strokeStyle='#e1c891';ctx.lineWidth=3*scale;ctx.beginPath();ctx.moveTo(-35*scale,0);ctx.lineTo(35*scale,0);ctx.stroke();ctx.restore();}
-  drawWorld=function(now){oldDrawWorld(now);if(longPick&&!longPick.hidden&&!longPick.taken){const bob=Math.sin(longPick.t)*4;ctx.save();ctx.fillStyle='#ffd95c33';ctx.beginPath();ctx.arc(tcx(longPick.x),tcy(longPick.y)+bob,44,0,7);ctx.fill();ctx.restore();drawLonganiza(tcx(longPick.x),tcy(longPick.y)+bob,1,0);}for(const r of thrownRistras){if(!r.cells)drawLonganiza(r.px,r.py,.9,(now-r.start)/90);else for(const c of r.cells){const a=c.x*TW,d=c.y*TH;ctx.fillStyle='#fff0a7';ctx.fillRect(a+7,d+7,TW-14,TH-14);ctx.fillStyle='#ff7b32';ctx.fillRect(a+TW*.22,d+TH*.22,TW*.56,TH*.56);}}};
+  const tut=document.createElement('div');tut.className='storyOverlay';tut.style.display='none';tut.innerHTML='<div class="storyCard"><div style="font-size:44px">🌭</div><h2>¡LONGANIZA DE FUENTES!</h2><p>Arma arrojadiza desbloqueada.</p><p>Mantén <b>PEPINAZO</b> pulsado durante 1 segundo y suelta.</p><p>La ristra vuela hasta <b>4 casillas</b> y explota con alcance de <b>2 casillas por lado</b>.</p><p>Cada enemigo eliminado te concede <b>+1 ristra</b>. La munición se conserva entre fases.</p><button id="longOk">¡ENTENDIDO!</button></div>';document.getElementById('box').appendChild(tut);tut.querySelector('#longOk').onclick=()=>{tut.style.display='none';paused=false;last=performance.now();};
+  function unlockLong(){if(longUnlocked)return;longUnlocked=true;ristras+=2;paused=true;tut.style.display='flex';hudExtra();}
 
-  lantern=function(side=1){const flicker=1+Math.sin(performance.now()/70)*.08;ctx.save();ctx.translate(35*side,3);ctx.scale(side,1);ctx.strokeStyle='#8a5a28';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,-13,11,Math.PI,0);ctx.stroke();ctx.fillStyle='#5c371a';ctx.fillRect(-4,-14,8,22);ctx.fillStyle='#9b682c';ctx.fillRect(-12,5,24,6);ctx.fillRect(-13,29,26,6);ctx.fillStyle='#e5b75b';ctx.fillRect(-10,10,20,19);ctx.fillStyle='rgba(255,233,155,.72)';ctx.fillRect(-6,12,12,15);ctx.fillStyle='#ffca4c';ctx.beginPath();ctx.ellipse(0,19,5*flicker,8*flicker,0,0,Math.PI*2);ctx.fill();ctx.fillStyle='#fff5bd';ctx.beginPath();ctx.ellipse(0,18,2.5*flicker,4.5*flicker,0,0,Math.PI*2);ctx.fill();ctx.restore();};
-  drawLightOverlay=function(){if(!(darkMode||L===2))return;const outerRadius=TW*6.15;ctx.save();ctx.fillStyle='rgba(0,0,0,0.90)';ctx.fillRect(0,0,cv.width,cv.height);ctx.globalCompositeOperation='destination-out';const cut=ctx.createRadialGradient(p.px,p.py,0,p.px,p.py,outerRadius);cut.addColorStop(0,'rgba(0,0,0,0.78)');cut.addColorStop(.80,'rgba(0,0,0,0.78)');cut.addColorStop(1,'rgba(0,0,0,0)');ctx.fillStyle=cut;ctx.beginPath();ctx.arc(p.px,p.py,outerRadius,0,Math.PI*2);ctx.fill();ctx.restore();ctx.save();ctx.globalCompositeOperation='screen';const glow=ctx.createRadialGradient(p.px,p.py,TH*.15,p.px,p.py,TW*2.7);glow.addColorStop(0,'rgba(255,207,92,.24)');glow.addColorStop(.55,'rgba(255,174,58,.09)');glow.addColorStop(1,'rgba(255,160,40,0)');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(p.px,p.py,TW*2.7,0,Math.PI*2);ctx.fill();ctx.restore();};
+  damageCells=function(cells,allow=true){const before=enemies.filter(e=>e.alive).length+(elite&&elite.alive?1:0)+sappers.filter(s=>s.alive).length;baseDamage(cells,allow);const after=enemies.filter(e=>e.alive).length+(elite&&elite.alive?1:0)+sappers.filter(s=>s.alive).length;if(longUnlocked&&before>after){ristras+=before-after;hudExtra();}if(longPick&&longPick.hidden&&cells.some(c=>c.x===longPick.x&&c.y===longPick.y)&&g[longPick.y][longPick.x]===0){longPick.hidden=false;say('¡ALGO HUELE A FUENTES!','#ffd95c',650);}};
+  touch=function(){if(longPick&&!longPick.hidden&&!longPick.taken&&p.x===longPick.x&&p.y===longPick.y){longPick.taken=true;unlockLong();}baseTouch();};
 
-  updateRistraHud();
+  function dir(){const d=p.dir||p.lastDir||'down';return d==='left'?[-1,0]:d==='right'?[1,0]:d==='up'?[0,-1]:[0,1];}
+  function throwLong(){if(!longUnlocked||ristras<=0||paused||over||trans)return;ristras--;hudExtra();const[dx,dy]=dir();let tx=p.x,ty=p.y;for(let i=0;i<4;i++){const nx=tx+dx,ny=ty+dy;if(nx<=0||ny<=0||nx>=C-1||ny>=R-1||g[ny][nx]===1||g[ny][nx]===3)break;tx=nx;ty=ny;}const n=performance.now();thrown.push({sx:p.x,sy:p.y,x:tx,y:ty,px:p.px,py:p.py,start:n,land:n+420,cells:null,until:0});}
+  function beginCharge(){if(paused||charging||over||trans)return;charging=true;chargeStart=performance.now();document.getElementById('fire').textContent=longUnlocked&&ristras>0?'🌭 CARGANDO…':'💥 PEPINAZO';}
+  function release(){if(!charging)return;const held=performance.now()-chargeStart;charging=false;document.getElementById('fire').innerHTML='💥<br>PEPINAZO';if(held>=950&&longUnlocked&&ristras>0)throwLong();else baseFire();}
+  fire=beginCharge;addEventListener('keyup',e=>{if(e.key===' ')release();});const fb=document.getElementById('fire');fb.onclick=null;fb.addEventListener('pointerdown',e=>{e.preventDefault();beginCharge();});fb.addEventListener('pointerup',e=>{e.preventDefault();release();});fb.addEventListener('pointercancel',release);
+
+  blast=function(b){const pre=traceBlast(b),hit=boss&&boss.alive&&duel&&tileIn(pre,boss);baseBlast(b);b._bossHazardHit=hit;};
+  function lingering(now){let kills=0;for(const b of bombs){if(!b.ex||now>=b.until)continue;const cells=b.sacredCells?b.cells.concat(b.sacredCells):b.cells;for(const e of enemies)if(e.alive&&tileIn(cells,e)){e.alive=false;score+=200;kills++;}if(elite&&elite.alive&&tileIn(cells,elite)){elite.alive=false;score+=500;kills++;}for(const s of sappers)if(s.alive&&tileIn(cells,s)){s.alive=false;score+=120;leaveBlood(s.x,s.y);kills++;}if(p&&tileIn(cells,p))hurt();if(boss.alive&&duel&&!b._bossHazardHit&&tileIn(cells,boss)){b._bossHazardHit=true;boss.hp--;score+=350;if(boss.hp<=0){boss.alive=false;score+=1000;say('¡'+BOSSES[L-1].name+' REVENTADO!','#ff8c42',700);setTimeout(win,720);}else say(`¡PEPINAZO! ${boss.hp} ♥`,'#ff8c42',580);}}if(kills&&longUnlocked){ristras+=kills;hudExtra();}if(kills){hud();checkDuel();}}
+
+  update=function(dt,now){if(paused)return;baseUpdate(dt,now);lingering(now);for(const r of thrown){if(!r.cells){const t=Math.min(1,(now-r.start)/(r.land-r.start));r.px=tcx(r.sx)+(tcx(r.x)-tcx(r.sx))*t;r.py=tcy(r.sy)+(tcy(r.y)-tcy(r.sy))*t-Math.sin(Math.PI*t)*TH*.7;if(t>=1){r.cells=traceBlast({x:r.x,y:r.y,range:2});r.until=now+520;damageCells(r.cells,true);}}}thrown=thrown.filter(r=>!r.cells||now<r.until);if(longPick&&!longPick.hidden&&!longPick.taken)longPick.t+=dt*.004;};
+
+  function drawLong(cx,cy,s=1,a=0){ctx.save();ctx.translate(cx,cy);ctx.rotate(a);ctx.strokeStyle='#ead39b';ctx.lineWidth=3*s;ctx.beginPath();ctx.moveTo(-37*s,0);ctx.lineTo(37*s,0);ctx.stroke();ctx.fillStyle='#c96534';for(let i=-2;i<=2;i++){ctx.beginPath();ctx.ellipse(i*14*s,0,10*s,7*s,0,0,7);ctx.fill();}ctx.restore();}
+  drawWorld=function(now){baseDrawWorld(now);if(longPick&&!longPick.hidden&&!longPick.taken)drawLong(tcx(longPick.x),tcy(longPick.y)+Math.sin(longPick.t)*4,1,0);for(const r of thrown){if(!r.cells)drawLong(r.px,r.py,.9,(now-r.start)/90);else for(const c of r.cells){ctx.fillStyle='#fff0a7';ctx.fillRect(c.x*TW+7,c.y*TH+7,TW-14,TH-14);ctx.fillStyle='#ff7b32';ctx.fillRect(c.x*TW+TW*.22,c.y*TH+TH*.22,TW*.56,TH*.56);}}};
+
+  lantern=function(side=1){const f=1+Math.sin(performance.now()/70)*.08;ctx.save();ctx.translate(35*side,3);ctx.scale(side,1);ctx.strokeStyle='#8a5a28';ctx.lineWidth=4;ctx.beginPath();ctx.arc(0,-13,11,Math.PI,0);ctx.stroke();ctx.fillStyle='#5c371a';ctx.fillRect(-4,-14,8,22);ctx.fillStyle='#9b682c';ctx.fillRect(-12,5,24,6);ctx.fillRect(-13,29,26,6);ctx.fillStyle='#e5b75b';ctx.fillRect(-10,10,20,19);ctx.fillStyle='#fff0a0';ctx.fillRect(-6,12,12,15);ctx.fillStyle='#ffb52f';ctx.beginPath();ctx.ellipse(0,19,5*f,8*f,0,0,7);ctx.fill();ctx.restore();};
+
+  drawLightOverlay=function(){if(!(darkMode||L===2))return;const rad=TW*6;ctx.save();const g=ctx.createRadialGradient(p.px,p.py,0,p.px,p.py,rad);g.addColorStop(0,'rgba(0,0,0,.20)');g.addColorStop(.78,'rgba(0,0,0,.20)');g.addColorStop(1,'rgba(0,0,0,.90)');ctx.fillStyle=g;ctx.fillRect(-cv.width,-cv.height,cv.width*3,cv.height*3);ctx.restore();ctx.save();ctx.globalCompositeOperation='screen';const glow=ctx.createRadialGradient(p.px,p.py,0,p.px,p.py,TW*2.4);glow.addColorStop(0,'rgba(255,205,82,.25)');glow.addColorStop(1,'rgba(255,170,40,0)');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(p.px,p.py,TW*2.4,0,7);ctx.fill();ctx.restore();};
+
+  const start=document.getElementById('start');start.innerHTML=`<div class="card"><h1>NAVAS DE TOLOSA</h1><h2>CRÓNICA DEL REY</h2><p>En esta crónica fantástica, un rey cristiano atraviesa cinco batallas separadas por generaciones.</p><p>Su juramento es abrir camino allí donde los ejércitos chocan y la frontera cambia de manos.</p><p>Porta un crucifijo como símbolo de su causa y descubre por el camino el poder improbable de los torreznos.</p><p>Entre polvo, agua, noche y acero, cada victoria lo acerca al siguiente malo malísimo.</p><p><b>La historia inspira el viaje; el disparate arcade hace el resto.</b></p><button id="play">COMENZAR LA CRÓNICA</button></div>`;
+  document.getElementById('play').onclick=()=>{start.style.display='none';L=1;score=0;shown.clear();level();last=performance.now();requestAnimationFrame(loop);};
+  hudExtra();
 })();
 </script>
 """
 
 html = html.replace("</head>", responsive_ui + "\n</head>")
-html = html.replace("</body>", gameplay_patch + "\n</body>")
+html = html.replace("</body>", game_patch + "\n</body>")
 st.components.v1.html(html, height=590, scrolling=False)
