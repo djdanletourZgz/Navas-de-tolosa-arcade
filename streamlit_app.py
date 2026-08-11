@@ -97,5 +97,153 @@ canvas{width:100%!important;height:100%!important;object-fit:contain!important;}
 </style>
 """
 
+# Correcciones de gameplay/iluminación sobre la V5 sin rehacer toda la lógica.
+gameplay_patch = r"""
+<script>
+(() => {
+  const tileIn = (cells, entity) => !!entity && !!cells && cells.some(c => c.x === entity.x && c.y === entity.y);
+  const visibleFireCells = (b) => (b.sacredCells ? b.cells.concat(b.sacredCells) : b.cells);
+
+  // Marca si el boss ya recibió el golpe inicial de ESTA explosión,
+  // para que la llama persistente no le quite varios corazones por el mismo pepinazo.
+  const originalBlast = blast;
+  blast = function(b){
+    const initialCells = traceBlast(b);
+    const bossHitInitially = boss && boss.alive && duel && tileIn(initialCells, boss);
+    originalBlast(b);
+    b._bossHazardHit = bossHitInitially;
+  };
+
+  // Mientras el fogonazo sea visible sigue siendo una zona peligrosa.
+  // Cualquier enemigo que entre después también recibe el impacto.
+  const originalUpdate = update;
+  update = function(dt, now){
+    originalUpdate(dt, now);
+    let changed = false;
+
+    for(const b of bombs){
+      if(!b.ex || now >= b.until) continue;
+      const cells = visibleFireCells(b);
+
+      for(const e of enemies){
+        if(e.alive && tileIn(cells, e)){
+          e.alive = false;
+          score += 200;
+          changed = true;
+        }
+      }
+
+      if(elite && elite.alive && tileIn(cells, elite)){
+        elite.alive = false;
+        score += 500;
+        say('¡ÉLITE ABRASADO!','#75e3ff',520);
+        changed = true;
+      }
+
+      for(const s of sappers){
+        if(s.alive && tileIn(cells, s)){
+          s.alive = false;
+          score += 120;
+          leaveBlood(s.x, s.y);
+          changed = true;
+        }
+      }
+
+      if(boss && boss.alive && duel && !b._bossHazardHit && tileIn(cells, boss)){
+        b._bossHazardHit = true;
+        boss.hp--;
+        score += 350;
+        changed = true;
+        if(boss.hp <= 0){
+          boss.alive = false;
+          score += 1000;
+          say('¡'+BOSSES[L-1].name+' REVENTADO!','#ff8c42',700);
+          setTimeout(win,720);
+        } else {
+          say(`¡PEPINAZO! ${boss.hp} ♥`,'#ff8c42',580);
+        }
+      }
+
+      if(p && tileIn(cells, p)) hurt();
+    }
+
+    if(changed){
+      hud();
+      checkDuel();
+    }
+  };
+
+  // Candil mucho más reconocible: asa, cuerpo, cristal y llama animada.
+  lantern = function(side=1){
+    const flicker = 1 + Math.sin(performance.now()/70)*0.08;
+    ctx.save();
+    ctx.translate(35*side, 3);
+    ctx.scale(side, 1);
+    ctx.strokeStyle='#8a5a28';
+    ctx.lineWidth=4;
+    ctx.beginPath();
+    ctx.arc(0,-13,11,Math.PI,0);
+    ctx.stroke();
+    ctx.fillStyle='#5c371a';
+    ctx.fillRect(-4,-14,8,22);
+    ctx.fillStyle='#9b682c';
+    ctx.fillRect(-12,5,24,6);
+    ctx.fillRect(-13,29,26,6);
+    ctx.fillStyle='#e5b75b';
+    ctx.fillRect(-10,10,20,19);
+    ctx.fillStyle='rgba(255,233,155,.72)';
+    ctx.fillRect(-6,12,12,15);
+    ctx.fillStyle='#ffca4c';
+    ctx.beginPath();
+    ctx.ellipse(0,19,5*flicker,8*flicker,0,0,Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle='#fff5bd';
+    ctx.beginPath();
+    ctx.ellipse(0,18,2.5*flicker,4.5*flicker,0,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  };
+
+  // Visibilidad pedida:
+  // - resto del mapa ≈10% visible
+  // - círculo de unas 6 casillas ≈80% visible
+  // - borde suavizado para que el candil resulte natural.
+  drawLightOverlay = function(){
+    if(!(darkMode || L===2)) return;
+
+    const outerRadius = TW * 6.15;
+    ctx.save();
+    ctx.fillStyle='rgba(0,0,0,0.90)';
+    ctx.fillRect(0,0,cv.width,cv.height);
+
+    ctx.globalCompositeOperation='destination-out';
+    const cut = ctx.createRadialGradient(p.px,p.py,0,p.px,p.py,outerRadius);
+    cut.addColorStop(0,'rgba(0,0,0,0.78)');
+    cut.addColorStop(0.80,'rgba(0,0,0,0.78)');
+    cut.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=cut;
+    ctx.beginPath();
+    ctx.arc(p.px,p.py,outerRadius,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // Tono cálido del candil sin lavar el escenario.
+    ctx.save();
+    ctx.globalCompositeOperation='screen';
+    const glow = ctx.createRadialGradient(p.px,p.py,TH*.15,p.px,p.py,TW*2.7);
+    glow.addColorStop(0,'rgba(255,207,92,.24)');
+    glow.addColorStop(.55,'rgba(255,174,58,.09)');
+    glow.addColorStop(1,'rgba(255,160,40,0)');
+    ctx.fillStyle=glow;
+    ctx.beginPath();
+    ctx.arc(p.px,p.py,TW*2.7,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  };
+})();
+</script>
+"""
+
 html = html.replace("</head>", responsive_ui + "\n</head>")
+html = html.replace("</body>", gameplay_patch + "\n</body>")
 st.components.v1.html(html, height=590, scrolling=False)
